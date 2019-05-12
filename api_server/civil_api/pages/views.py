@@ -5,6 +5,9 @@ import json
 
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.http import HttpResponse
+
+from django.conf import settings
 
 
 def loadContent():
@@ -24,3 +27,23 @@ def homePageView(request):
     response = JsonResponse(page.object_list, safe=False)
     response['Access-Control-Allow-Origin'] = '*'
     return response
+
+def testView(request):
+    print 'Base', settings.BASE_DIR
+    print 'Root', settings.STATIC_ROOT
+    return HttpResponse("""
+<head>
+    <link rel="stylesheet" href="/static/css/test.css">
+</head>
+
+    <div class="grid-container">
+       <div class="grid-item">Tweets go here</div>
+       <div class="calendar-list"">
+         <div> January </div>
+         <div> February </div>
+         <div> March </div>
+       </div>
+    </div>
+
+
+ <p><img src=/static/images/logo.svg alt="My image"> </p>""")
